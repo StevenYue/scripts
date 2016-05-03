@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$#" -ne 1  ]
+then
+    echo "usage: deployarduinolib <lib name>"
+    exit
+fi
+
+cp -rf $1 /usr/share/arduino/libraries/
