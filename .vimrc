@@ -40,5 +40,5 @@ set autochdir           " set working direction to current file
 set ignorecase          " case insensitive
 set incsearch           " show next word while entering search text
 
-set clipboard=unnamed
+"set clipboard=unnamed
 "set number
