@@ -1,0 +1,68 @@
+#!/bin/bash
+match=$1
+extension=$2
+mode=$3
+
+removePPrint()
+{
+    if [[ $1 != *".$extension"  ]]
+    then
+        return 
+    fi
+    
+    : " 
+    cc=0
+    while IFS='' read -r line || [[ -n "$line" ]]
+    do
+        if [[ $line == *"$match"* ]]
+        then
+            echo "$1 line $cc : $line"
+        fi
+        cc=$((cc+1))
+    done < "$1"
+    "
+
+    res=$(grep -nr $match $1)
+    IFS=$'\n' 
+    for word in $res
+    do 
+        echo "$1 line$word"
+    done
+
+    if [[ $mode == "-d" ]]
+    then
+        sed -i /$match/d $1
+    fi
+}
+
+if [[ "$#" == 0 || $1 == "--help"  ]]
+then
+    echo "1st arg: pattern to match
+2nd arg: file extension,  py for python file
+3rd arg: (Optional) -d for delete, otherwise just checking"
+
+else
+    PWD="$(pwd)/*"
+    if [[ $mode == "-d" ]]
+    then 
+        echo "Removing ..."
+    else
+    echo "Match found"
+    fi
+
+    for f in $PWD
+    do
+        IFS="/" 
+        cc=0
+        token=()
+        for word in $f
+        do 
+            token[cc]=$word
+            #echo ${token[cc]}
+            cc=$((cc+1))
+        done
+    fileName=${token[cc-1]}
+    #echo $fileName
+    removePPrint $fileName
+    done
+fi
