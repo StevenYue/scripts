@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# != 1  ]
+    then
+    echo "upshellconfig <commit msg>"
+    exit
+fi
+
+commitMsg=$1
+shellConfigDir="/home/s/work/shellconfig"
+
+cd $shellConfigDir
+echo "updating shell config files"
+cp ~/.vimrc             .
+cp ~/.bashrc            .
+cp ~/.tmux.conf         .
+cp -rf ~/.tmux          .
+
+git add .
+git commit -m '$commitMsg'
+git push origin master
+
