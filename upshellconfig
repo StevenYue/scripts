@@ -7,17 +7,17 @@ if [ $# != 1  ]
 fi
 
 commitMsg=$1
-shellConfigDir="/home/s/work/shellconfig"
-echo $(pwd)
+shellConfigDir="/home/s/workspace/shellconfig"
+
 cd $shellConfigDir
-echo $(pwd)
+
+
 echo "updating shell config files"
 cp ~/.vimrc             .
 cp ~/.bashrc            .
 cp ~/.tmux.conf         .
 cp -rf ~/.tmux          .
 
-echo $(pwd)
 git add .
 git commit -m '$commitMsg'
 git push origin master
