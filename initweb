@@ -1,0 +1,115 @@
+#!/bin/bash
+timestamp=$(date)
+
+createUIFile()
+{
+if [ "$1" != "" ]
+then
+    echo '<!DOCTYPE html>' >> $1
+    echo '<html>' >> $1
+    echo '<head>' >> $1
+    echo '<title></title>' >> $1
+    echo '<meta name="viewport" content="width = device-width, initial-scale = 1">' >> $1
+    echo '<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' >> $1
+    echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>' >> $1
+    echo '<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>' >> $1
+    echo '' >> $1
+    if [ "$2" != "" ]
+    then
+        echo '<script src="'$2'"></script>' >> $1
+    fi
+    if [ "$3" != "" ]
+    then
+        echo '<link type="text/css" rel="stylesheet" href="'$3'"/>' >> $1
+    fi
+    
+    echo -e '\n<style>' >> $1
+    echo -e '\n</style>' >> $1
+
+    echo -e '\n<script type="text/javascript">' >> $1
+    echo '$(document).ready(function(){' >> $1
+    echo -e '\n});' >> $1
+    echo -e '\n</script>' >> $1
+
+    echo '</head>' >> $1
+    echo '' >> $1
+    echo '<body>' >> $1
+    echo '<h1>Test, Deletion needed</h1>' >> $1
+    echo '</body>' >> $1
+    echo '</html>' >> $1
+    echo '<!-- Steeng create at: '$timestamp' -->' >> $1
+fi
+}
+
+createJSFile()
+{
+if [ "$1" != "" ]
+then
+    touch $1
+    echo '$(document).ready(function(){' >> $1
+    echo '  alert("Test, Do not forget to delete");' >> $1
+    echo '});' >> $1
+    echo '' >> $1
+    echo '//Steeng create at: '$timestamp >> $1
+fi
+}
+
+createCSSFile()
+{
+if [ "$1" != "" ]
+then
+    touch $1
+    echo 'body' >> $1
+    echo '{' >> $1
+    echo '' >> $1
+    echo '}' >> $1
+    echo '' >> $1
+    echo '/*Steeng create at: '$timestamp' */' >> $1
+fi
+}
+
+printUsage()
+{
+    echo "Usage: initweb <PAGE_NAME> option [file extension] .."
+    echo "Options:\n  -i: UI file -j js source file \n -c CSS file" 
+}
+
+
+
+#***************main***********************
+argc=$#
+if [ $argc -lt 1 ]
+then 
+    printUsage 
+    exit 1
+fi
+
+pageName=$1
+uiFile=$pageName".html"
+jsFile=""
+cssFile=""
+
+while [ "$2" != "" ]; do
+    case $2 in
+        -j | --js )                 jsFile=$pageName".js"
+                                    ;;
+        -c | --css )                cssFile=$pageName".css"
+                                    ;;
+        -i | --ui )                 shift
+                                    if [ "$2" != "" ]
+                                    then
+                                        uiFile=$pageName."$2"
+                                    fi
+                                    ;;
+        -h | --help | * )           printUsage
+                                exit
+                                ;;
+    esac
+    shift
+done
+
+createUIFile $uiFile $jsFile $cssFile
+createJSFile $jsFile
+createCSSFile $cssFile
+
+echo "DONE"

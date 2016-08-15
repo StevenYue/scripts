@@ -1,0 +1,91 @@
+#!/bin/bash
+if [ $# -lt 2 ]
+then 
+    echo "Usage: initinolib <LIB_NAME> <DEMO_NAME> <DEMO_NAME> .."
+    exit 1
+fi
+
+LIB_NAME=$(echo $1 | tr 'a-z' 'A-Z')
+lib_name=$(echo $1 | tr 'A-Z' 'a-z')
+classname=`sed 's/\(.\)/\U\1/' <<< "$lib_name"`
+
+headerfile=$LIB_NAME"_LIB.h"
+sourcefile=$LIB_NAME"_LIB.cpp"
+keywordsfile="keywords.txt"
+timestamp=$(date)
+
+create_example()
+{
+    if [ $# != 2 ]
+    then
+        echo "Error: only need example name to create a lib example!"
+    exit 1
+    fi
+
+    example_file_name=$1".ino"
+    touch $example_file_name
+    echo "//Steeng: "$timestamp >> $example_file_name
+    if [ $2 == 0 ] #Not an example
+    then
+        echo -e "#include <"$headerfile">\n" >> $example_file_name
+    else
+        echo -e "#include \""$headerfile"\"\n" >> $example_file_name
+    fi
+
+    echo $classname" "$classname";" >> $example_file_name
+    echo -e "void setup()\n{\n\n}\n" >> $example_file_name
+    echo -e "void loop()\n{\n\n}\n" >> $example_file_name
+    echo "//------ end of "$example_file_name" ------" >> $example_file_name
+}
+
+mkdir $LIB_NAME
+cd    $LIB_NAME
+touch $headerfile
+touch $sourcefile
+touch $keywordsfile
+
+echo "//Steeng: "$timestamp >> $headerfile
+echo "#ifndef INCLUDED_"$LIB_NAME >> $headerfile
+echo "#define INCLUDED_"$LIB_NAME >> $headerfile
+echo "#include <Arduino.h> " >> $headerfile
+echo -e "class "$classname >> $headerfile
+echo "{" >> $headerfile
+echo -e "  public:" >> $headerfile
+echo -e "    "$classname"(){};\n" >> $headerfile
+echo -e "    "void dump"();  //The BEST method ever!!\n" >> $headerfile
+echo -e "  private:\n" >> $headerfile
+echo "};" >> $headerfile
+echo "" >> $headerfile
+echo "#endif" >> $headerfile
+echo "//------ end of "$headerfile" ------" >> $headerfile
+
+echo "//Steeng: "$timestamp >> $sourcefile
+echo "#include \""$headerfile"\"" >> $sourcefile
+echo "" >> $sourcefile
+echo "void "$classname"::dump()" >> $sourcefile
+echo -e "{\n" >> $sourcefile
+echo -e "}" >> $sourcefile
+echo "" >> $sourcefile
+echo "//------ end of "$sourcefile" ------" >> $sourcefile
+
+echo $classname"    KEYWORD1" >> $keywordsfile
+echo "dump    KEYWORD2" >> $keywordsfile
+
+for var in "$@"
+do
+    if [ $var == $1 ]
+    then
+        tester=1
+        create_example $LIB_NAME $tester
+        mkdir "examples"
+        cd    "examples"
+    else
+        tester=0
+        mkdir $var
+        cd    $var
+        create_example $var $tester
+        cd ..
+    fi
+done
+
+echo "DONE"
