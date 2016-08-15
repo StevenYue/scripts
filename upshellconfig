@@ -20,5 +20,6 @@ cp -rf ~/.tmux          .
 
 git add .
 git commit -m '$commitMsg'
+git pull
 git push origin master
 
