@@ -71,7 +71,7 @@ fi
 printUsage()
 {
     echo "Usage: initweb <PAGE_NAME> option [file extension] .."
-    echo "Options:\n  -i: UI file -j js source file \n -c CSS file" 
+    echo -e "Options:\n -i | --ui: UI file  \n -j | --js: js source file \n -c | --css: CSS file" 
 }
 
 
