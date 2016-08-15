@@ -1,9 +1,21 @@
 #!/bin/bash
 
-if [ "$#" -ne 1  ]
+if [ $# == 0 ]
 then
-    echo "usage: deployarduinolib <lib name>"
+    echo "usage: deployarduinolib <lib name> <-d>"
     exit
 fi
 
-cp -rf $1 /usr/share/arduino/libraries/
+if [ "$2" == "-d" ]
+then
+    rm -rf "/usr/share/arduino/libraries/"$1    
+else
+    cp -rf $1 /usr/share/arduino/libraries/
+    cd "/usr/share/arduino/libraries/"$1 
+    rm *.ino
+fi
+
+echo "DONE"
+
+
+
