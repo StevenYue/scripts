@@ -11,7 +11,6 @@ shellConfigDir="/home/s/workspace/shellconfig"
 
 cd $shellConfigDir
 
-
 echo "updating shell config files"
 cp ~/.vimrc             .
 cp ~/.bashrc            .
@@ -19,7 +18,7 @@ cp ~/.tmux.conf         .
 cp -rf ~/.tmux          .
 
 git add .
-git commit -m '$commitMsg'
+git commit -m """$commitMsg"""
 git pull
 git push origin master
 
