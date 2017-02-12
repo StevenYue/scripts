@@ -1,0 +1,54 @@
+#!/bin/bash
+if [ $# -lt 1 ]
+then 
+    echo "Usage: initcpp <File_name> [namespace]"
+    exit 1
+fi
+
+fileName=$1
+namespace=$2
+FILENAME=$(echo $1 | tr 'a-z' 'A-Z')
+
+headerfile=$fileName".h"
+sourcefile=$fileName".cpp"
+timestamp=$(date)
+
+touch $headerfile
+touch $sourcefile
+
+echo "//Steeng created at "$timestamp >> $headerfile
+echo "#ifndef INCLUDED_"$FILENAME >> $headerfile
+echo "#define INCLUDED_"$FILENAME >> $headerfile
+if [[ $namespace != "" ]]
+then
+    echo "namespace "$namespace"{ " >> $headerfile
+fi
+echo "" >> $headerfile
+echo "" >> $headerfile
+echo "" >> $headerfile
+echo "" >> $headerfile
+echo "" >> $headerfile
+if [[ $namespace != "" ]]
+then
+    echo "}  //end of namespace "$namespace"" >> $headerfile
+fi
+echo "#endif" >> $headerfile
+
+echo "//Steeng created at "$timestamp >> $sourcefile
+echo "#include <"$headerfile">" >> $sourcefile
+if [[ $namespace != "" ]]
+then
+    echo "namespace "$namespace"{ " >> $sourcefile
+fi
+echo "" >> $sourcefile
+echo "" >> $sourcefile
+echo "" >> $sourcefile
+echo "" >> $sourcefile
+echo "" >> $sourcefile
+if [[ $namespace != "" ]]
+then
+    echo "}  //end of namespace "$namespace"" >> $sourcefile
+fi
+
+echo "Created "$headerfile", "$sourcefile""
+echo "DONE"
