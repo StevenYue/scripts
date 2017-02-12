@@ -21,7 +21,7 @@ echo "#ifndef INCLUDED_"$FILENAME >> $headerfile
 echo "#define INCLUDED_"$FILENAME >> $headerfile
 if [[ $namespace != "" ]]
 then
-    echo "namespace "$namespace"{ " >> $headerfile
+    echo "namespace "$namespace" { " >> $headerfile
 fi
 echo "" >> $headerfile
 echo "" >> $headerfile
@@ -38,7 +38,7 @@ echo "//Steeng created at "$timestamp >> $sourcefile
 echo "#include <"$headerfile">" >> $sourcefile
 if [[ $namespace != "" ]]
 then
-    echo "namespace "$namespace"{ " >> $sourcefile
+    echo "namespace "$namespace" { " >> $sourcefile
 fi
 echo "" >> $sourcefile
 echo "" >> $sourcefile
