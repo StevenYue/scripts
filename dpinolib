@@ -2,7 +2,7 @@
 
 if [ $# == 0 ]
 then
-    echo "usage: deployarduinolib <lib name> <-d>"
+    echo "usage: deployarduinolib <lib name> <-d: delete the lib>"
     exit
 fi
 

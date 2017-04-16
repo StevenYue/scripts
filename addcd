@@ -1,0 +1,46 @@
+#!/bin/bash
+
+printUsage()
+{
+    echo "Usage: addcd <alias>"
+    echo "Once added, run cd<alias> to cd to the target directory"
+    echo "For instance: addcd helloworld; cdhelloworld"
+}
+
+if [ $# != 1 ]
+then 
+    printUsage
+    exit
+fi
+
+alias=$1
+pwd=$(pwd)
+bashrc=$HOME"/.bashrc"
+match=$(grep -r "cd"$alias"=" $bashrc)
+newline="alias cd"$alias"='cd "$pwd"'"
+
+if [[ $match == "" ]]
+then
+    echo "adding alias cd"$alias
+    echo $newline >> $bashrc
+else
+    echo "updating alias cd"$alias
+    match=$(echo $match | sed -r 's/\//\\\//g')
+    newline=$(echo $newline | sed -r 's/\//\\\//g')
+    sed -i "s/$match/$newline/" $bashrc
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
