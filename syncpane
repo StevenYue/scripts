@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for paneNum in $(tmux list-panes -F '#P')
+do 
+    tmux send-keys -t ${paneNum} "cd $(pwd)" C-m
+done
+
