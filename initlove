@@ -1,0 +1,63 @@
+#!/bin/bash
+mainFile="main.lua"
+bomberFile="bomber.lua"
+makeFile="Makefile"
+
+timestamp=$(date)
+
+touch $mainFile
+touch $makeFile
+touch $bomberFile
+
+echo "--Steeng created at "$timestamp >> $mainFile
+echo "local Bomber = require \"bomber\"" >> $mainFile
+echo "g_bomber = Bomber:create()" >> $mainFile
+echo "" >> $mainFile
+echo "function love.load()" >> $mainFile
+echo "" >> $mainFile
+echo "    g_bomber:drop(\"bomber ready to take off\")" >> $mainFile
+echo "end" >> $mainFile
+echo "" >> $mainFile
+
+echo "function love.update(dt)" >> $mainFile
+echo "" >> $mainFile
+echo "end" >> $mainFile
+echo "" >> $mainFile
+
+echo "function love.draw()" >> $mainFile
+echo "    g_bomber:bombard()" >> $mainFile
+echo "end" >> $mainFile
+echo "" >> $mainFile
+
+echo "function love.keypressed(key, u)" >> $mainFile
+echo "    g_bomber:drop(\"key pressed: \"..key)" >> $mainFile
+echo "end" >> $mainFile
+echo "" >> $mainFile
+
+echo "#Steeng created at "$timestamp >> $makeFile
+echo "" >> $makeFile
+echo "run:" >> $makeFile
+echo -e "\tlove ./ &" >> $makeFile
+echo "" >> $makeFile
+
+echo "--Steeng created at "$timestamp >> $bomberFile
+echo "" >> $bomberFile
+echo "Bomber = {}" >> $bomberFile
+echo "function Bomber:create()" >> $bomberFile
+echo "    local bomber={}" >> $bomberFile
+echo "    bomber.bombs=''" >> $bomberFile
+echo "    function bomber:bombard(bomb)" >> $bomberFile
+echo "        love.graphics.setColor(math.random(200, 250), math.random(0, 200), math.random(0, 200))" >> $bomberFile
+echo "        love.graphics.print(self.bombs, 300, 0)" >> $bomberFile
+echo "    end" >> $bomberFile
+echo "    function bomber:drop(bomb)" >> $bomberFile
+echo "        if \"\" == self.bombs then" >> $bomberFile
+echo "            self.bombs = bomb" >> $bomberFile
+echo "        else" >> $bomberFile
+echo "            self.bombs = self.bombs..\"\n\"..bomb" >> $bomberFile
+echo "        end" >> $bomberFile
+echo "    end" >> $bomberFile
+echo "    return bomber" >> $bomberFile
+echo "end" >> $bomberFile
+echo "" >> $bomberFile
+echo "return Bomber" >> $bomberFile
