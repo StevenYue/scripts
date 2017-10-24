@@ -21,7 +21,7 @@ newline="alias cd"$alias"='cd "$pwd"'"
 
 if [[ $match == "" ]]
 then
-    echo "adding alias cd"$alias
+    echo "adding alias cd"$alias"="$pwd
     echo $newline >> $bashrc
 else
     echo "updating alias cd"$alias
