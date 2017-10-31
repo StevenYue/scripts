@@ -7,4 +7,5 @@
 5. initweb: helps me generate all the web related annoying stuffs
 6. addcd: make navigation easier
 7. syncpane: sync all tmux panes
-7. initlove: create files for love2d project
+8. initlove: create files for love2d project
+9. modifyTimeStamp.py: modify timestamp by a offset in .srt file(subtitle files)
